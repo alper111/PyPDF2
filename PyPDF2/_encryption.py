@@ -84,6 +84,9 @@ try:
             iv = data[:16]
             data = data[16:]
             aes = AES.new(self.key, AES.MODE_CBC, iv)
+            if len(data) % 16:
+                from Crypto.Util.Padding import pad
+                data = pad(data, 16)
             d = aes.decrypt(data)
             if len(d) == 0:
                 return d
